@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -55,27 +56,32 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
 
-    @BindView(R.id.signInButton)
-    Button signInButton;
+    @BindView(R.id.btn_login)
+    Button btn_login;
+    @BindView(R.id.txt_skip)
+    TextView txt_skip;
 
-    @BindView(R.id.signUpButton)
-    Button signUpButton;
-
-    @OnClick(R.id.signInButton)
-    void signInUser()
-    {
+    @OnClick(R.id.btn_login)
+    void loginUser() {
         startActivityForResult(AuthUI.getInstance()
-        .createSignInIntentBuilder()
-        .setAvailableProviders(providers).build(),APP_REQUEST_CODE);
+                .createSignInIntentBuilder()
+                .setAvailableProviders(providers).build(), APP_REQUEST_CODE);
     }
 
-    @OnClick(R.id.signUpButton)
-    void GoToRegister()
+    @OnClick(R.id.txt_skip)
+    void skipLoginJustGoHome()
     {
-        Intent intent = new Intent(this, Register.class);
+        Intent intent = new Intent(this, HomeActivity.class);
         intent.putExtra(Common.IS_LOGIN, false);
         startActivity(intent);
     }
+
+//    @OnClick(R.id.signUpButton)
+//    void GoToRegister() {
+//        Intent intent = new Intent(this, Register.class);
+//        intent.putExtra(Common.IS_LOGIN, false);
+//        startActivity(intent);
+//    }
 
     @Override
     protected void onStart() {
@@ -85,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
-        if(authStateListener != null)
+        if (authStateListener != null)
             firebaseAuth.removeAuthStateListener((authStateListener));
         super.onStop();
     }
@@ -93,15 +99,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == APP_REQUEST_CODE)
-        {
+        if (requestCode == APP_REQUEST_CODE) {
             IdpResponse response = IdpResponse.fromResultIntent(data);
-            if(resultCode == RESULT_OK)
-            {
+            if (resultCode == RESULT_OK) {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            }
-            else
-            {
+            } else {
                 Toast.makeText(this, "Failed to Sign In", Toast.LENGTH_SHORT).show();
             }
 
@@ -111,41 +113,38 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
-//
-//        printKeyHash();
-//
+        setContentView(R.layout.activity_main);
+
+        printKeyHash();
+
         providers = Arrays.asList(new AuthUI.IdpConfig.PhoneBuilder().build());
 
         firebaseAuth = firebaseAuth.getInstance();
         authStateListener = firebaseAuth1 -> {
             FirebaseUser user = firebaseAuth1.getCurrentUser();
-            if(user !=null)
-            {
+            if (user != null) {
                 checkUserFromFirebase(user);
             }
         };
 
         Dexter.withActivity(this)
-                .withPermissions(new String[] {
+                .withPermissions(new String[]{
                         Manifest.permission.READ_CALENDAR,
                         Manifest.permission.WRITE_CALENDAR
                 }).withListener(new MultiplePermissionsListener() {
             @Override
             public void onPermissionsChecked(MultiplePermissionsReport report) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                if(user != null)
-                {
+                if (user != null) {
                     FirebaseInstanceId.getInstance()
                             .getInstanceId()
                             .addOnCompleteListener(task -> {
-                                if(task.isSuccessful())
-                                {
-                                    Common.updateToken(getBaseContext(),task.getResult().getToken());
+                                if (task.isSuccessful()) {
+                                    Common.updateToken(getBaseContext(), task.getResult().getToken());
 
                                     Log.d("", task.getResult().getToken());
 
-                                    Intent intent = new Intent (MainActivity.this,HomeActivity.class);
+                                    Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                                     intent.putExtra(Common.IS_LOGIN, true);
                                     startActivity(intent);
                                     finish();
@@ -165,31 +164,15 @@ public class MainActivity extends AppCompatActivity {
             public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
 
             }
-        });
+        }).check();
+    }
 
-        AccessToken accessToken = AccountKit.getCurrentAccessToken();
-        if(accessToken != null)
-        {
+        private void checkUserFromFirebase (FirebaseUser user){
             Intent intent = new Intent(this, HomeActivity.class);
             intent.putExtra(Common.IS_LOGIN, true);
             startActivity(intent);
             finish();
-       }
-        else
-        {
-            setContentView(R.layout.activity_main);
-            ButterKnife.bind(MainActivity.this);
         }
-
-    }).check();
-
-    private void checkUserFromFirebase(FirebaseUser user) {
-        Intent intent = new Intent(this, HomeActivity.class);
-        intent.putExtra(Common.IS_LOGIN, true);
-        startActivity(intent);
-        finish();
-    }
-
 
 
 //        signInButton = (Button) findViewById(R.id.signInButton);
@@ -209,25 +192,24 @@ public class MainActivity extends AppCompatActivity {
 //        });
 //    }
 
-    private void printKeyHash() {
-        try{
-            PackageInfo packageInfo = getPackageManager().getPackageInfo(
-                    getPackageName(),
-                    PackageManager.GET_SIGNATURES
-            );
-            for(Signature signature : packageInfo.signatures)
-            {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                Log.d("KEYHASH", Base64.encodeToString(md.digest(),Base64.DEFAULT));
-            }
+        private void printKeyHash () {
+            try {
+                PackageInfo packageInfo = getPackageManager().getPackageInfo(
+                        getPackageName(),
+                        PackageManager.GET_SIGNATURES
+                );
+                for (Signature signature : packageInfo.signatures) {
+                    MessageDigest md = MessageDigest.getInstance("SHA");
+                    md.update(signature.toByteArray());
+                    Log.d("KEYHASH", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+                }
 
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
         }
-    }
 //
 //    public void openHomeActivity(){
 //        Intent intent = new Intent(this, HomeActivity.class);
@@ -238,4 +220,4 @@ public class MainActivity extends AppCompatActivity {
 //        Intent intent = new Intent(this, Register.class);
 //        startActivity(intent);
 //    }
-}
+    }

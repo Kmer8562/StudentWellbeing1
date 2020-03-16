@@ -29,6 +29,8 @@ import com.example.studentwellbeing.Service.PicassoImageLoadingService;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -89,7 +91,8 @@ public class HomeFragment extends Fragment implements IWelcomeStudentsLoadListen
         iBannerLoadListener = this;
         iWelcomeStudentsLoadListener = this;
 
-        if(AccountKit.getCurrentAccessToken() !=null)
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user !=null)
         {
             setUserInformation();
             loadBanner();

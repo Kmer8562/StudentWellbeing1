@@ -27,6 +27,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomnavigation.BottomNavigationView.OnNavigationItemSelectedListener;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -63,44 +65,33 @@ public class HomeActivity extends AppCompatActivity {
             if (isLogin)
             {
                 dialog.show();
-                AccountKit.getCurrentAccount(new AccountKitCallBack<Account>() {
-                    @Override
-                    public void onSuccess(final Account account) {
-                        if(account != null) {
-                            DocumentReference currentUser = userRef.document(account.getPhoneNumber().toString());
-                            currentUser.get()
-                                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                            if (task.isSuccessful())
-                                            {
-                                                DocumentSnapshot userSnapShot = task.getResult();
-                                                if (!userSnapShot.exists())
-                                                {
-                                                    showUpdateDialog(account.getPhoneNumber().toString());
-                                                }
-                                                else
-                                                {
-                                                    //If the user is already in the system
-                                                    Common.currentUser = userSnapShot.toObject(User.class);
-                                                    bottomNavigationView.setSelectedItemId(R.id.action_home);
 
-                                                }
-                                                if(dialog.isShowing())
-                                                    dialog.dismiss();
-                                            }
-                                        }
-                                    });
-                        }
-                    }
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-                    @Override
-                    public void onError(AccountKitError accountKitError) {
-                        Toast.makeText(HomeActivity.this, "" + accountKitError.getErrorType().getMessage, Toast.LENGTH_SHORT);
-                    }
-                });
+                DocumentReference currentUser = userRef.document(user.getPhoneNumber());
+                currentUser.get()
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful())
+                            {
+                                DocumentSnapshot userSnapShot = task.getResult();
+                                if (!userSnapShot.exists())
+                                {
+                                    showUpdateDialog(user.getPhoneNumber());
+                                }
+                                else
+                                    {
+                                        //If the user is already in the system
+                                        Common.currentUser = userSnapShot.toObject(User.class);
+                                        bottomNavigationView.setSelectedItemId(R.id.action_home);
+
+                                    }
+                                if(dialog.isShowing())
+                                    dialog.dismiss();
+                            }
+                        });
             }
         }
+
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new OnNavigationItemSelectedListener() {
             Fragment fragment = null;
