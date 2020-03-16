@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "185929082097",
+    "firebase_url": "https://studentwellbeing-83eb5.firebaseio.com",
+    "project_id": "studentwellbeing-83eb5",
+    "storage_bucket": "studentwellbeing-83eb5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:185929082097:android:1d07a17ac4ca4d7b3df550",
+        "android_client_info": {
+          "package_name": "com.example.studentwellbeing"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "185929082097-bo96uecrod7hpcno931uksn8e54a73r5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.studentwellbeing",
+            "certificate_hash": "0a027e1c318a9e6145eb3bb4ef4b88a90e688aa6"
+          }
+        },
+        {
+          "client_id": "185929082097-2nankuimqnf80jvg3ofrqdqketkk2pma.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjN0T_csFrt9Mlo1c6_qiLBvzwMCxY2Ck"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "185929082097-2nankuimqnf80jvg3ofrqdqketkk2pma.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
