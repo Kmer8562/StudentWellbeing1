@@ -16,6 +16,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import io.paperdb.Paper;
 
 public class Common {
@@ -26,18 +29,24 @@ public class Common {
     public static final String KEY_STEP = "STEP" ;
     public static final String KEY_COUNCILLOR_SELECTED = "COUNCILLOR_SELECTED";
     public static final int TIME_SLOT_TOTAL = 15;
+    public static final Object DISABLE_TAG = "DISABLE TAG" ;
+    public static final String KEY_TIME_SLOT = "TIME_SLOT";
+    public static final String KEY_CONFIRM_BOOKING = "CONFIRM_BOOKING";
     public static String IS_LOGIN = "IsLogin";
     public static User currentUser;
     public static Department currentDepartment;
     public static int step = 0;
     public static String campus ="";
     public static Councillor currentCouncillor;
+    public static int currentTimeSlot=-1;
+    public static Calendar bookingDate= Calendar.getInstance();
+    public static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd_MM_yyyy");
 
     public static void updateToken(Context context,final String s) {
 
-//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-//        if(user !=null)
-//        {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user !=null)
+        {
 //            MyToken myToken = new MyToken();
 //            myToken.setToken(s);
 //            myToken.setTokenType(TOKEN_TYPE.CLIENT);
@@ -74,7 +83,7 @@ public class Common {
 //                            });
 //                }
 //            }
-//        }
+        }
     }
 
     public static String convertTimeSlotToString(int slot) {

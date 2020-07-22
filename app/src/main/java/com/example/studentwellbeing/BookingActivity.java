@@ -58,6 +58,11 @@ public class BookingActivity extends AppCompatActivity {
         {
             Common.step--;
             viewPager.setCurrentItem(Common.step);
+            if(Common.step < 3)
+            {
+                btn_next_step.setEnabled(true);
+                setColorButton();
+            }
         }
     }
     @OnClick(R.id.btn_next_step)
@@ -75,8 +80,18 @@ public class BookingActivity extends AppCompatActivity {
                if(Common.currentCouncillor != null)
                    loadTimeSlotOfCouncillor(Common.currentCouncillor.getCouncillorId());
            }
+           else if(Common.step == 3)
+           {
+               if(Common.currentTimeSlot != -1)
+                   confirmBooking();
+           }
            viewPager.setCurrentItem(Common.step);
        }
+    }
+
+    private void confirmBooking() {
+        Intent intent = new Intent(Common.KEY_CONFIRM_BOOKING);
+        localBroadcastManager.sendBroadcast(intent);
     }
 
     private void loadTimeSlotOfCouncillor(String councillorId) {
@@ -140,6 +155,8 @@ public class BookingActivity extends AppCompatActivity {
                 Common.currentDepartment = intent.getParcelableExtra(Common.KEY_DEPARTMENT_SERVICE);
             else if(step == 2)
                 Common.currentCouncillor = intent.getParcelableExtra(Common.KEY_COUNCILLOR_SELECTED);
+            else if(step == 3)
+                Common.currentTimeSlot = intent.getIntExtra(Common.KEY_TIME_SLOT, -1);
 
             btn_next_step.setEnabled(true);
             setColorButton();

@@ -60,7 +60,8 @@ public class HomeActivity extends AppCompatActivity {
         userRef = FirebaseFirestore.getInstance().collection("User");
         dialog = new SpotsDialog.Builder().setContext(this).setCancelable(false).build();
 
-        if(getIntent() != null) {
+        if(getIntent() != null)
+        {
             boolean isLogin = getIntent().getBooleanExtra(Common.IS_LOGIN, false);
             if (isLogin)
             {

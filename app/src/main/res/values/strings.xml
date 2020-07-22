@@ -8,4 +8,11 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="normal">Normal</string>
 
+    <string name="address_bullet">\u2022 Address: </string>
+    <string name="time_bullet">\u2022 Time: </string>
+    <string name="councillor_bullet">\u2022 Councillor: </string>
+    <string name="bullet">\u2022: </string>
+
+
+
 </resources>

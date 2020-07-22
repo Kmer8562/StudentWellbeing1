@@ -13,7 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.annotation.NonNull;
 
 import com.example.studentwellbeing.Common.Common;
 import com.firebase.ui.auth.AuthUI;
@@ -99,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == APP_REQUEST_CODE) {
             IdpResponse response = IdpResponse.fromResultIntent(data);
             if (resultCode == RESULT_OK) {
@@ -114,12 +114,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
-        printKeyHash();
 
         providers = Arrays.asList(new AuthUI.IdpConfig.PhoneBuilder().build());
 
-        firebaseAuth = firebaseAuth.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
         authStateListener = firebaseAuth1 -> {
             FirebaseUser user = firebaseAuth1.getCurrentUser();
             if (user != null) {
@@ -136,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
             public void onPermissionsChecked(MultiplePermissionsReport report) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
+
                     FirebaseInstanceId.getInstance()
                             .getInstanceId()
                             .addOnCompleteListener(task -> {
@@ -168,10 +169,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
         private void checkUserFromFirebase (FirebaseUser user){
-            Intent intent = new Intent(this, HomeActivity.class);
-            intent.putExtra(Common.IS_LOGIN, true);
-            startActivity(intent);
-            finish();
+            FirebaseInstanceId.getInstance()
+                    .getInstanceId()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            Common.updateToken(getBaseContext(), task.getResult().getToken());
+
+                            Log.d("", task.getResult().getToken());
+
+                            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                            intent.putExtra(Common.IS_LOGIN, true);
+                            startActivity(intent);
+                            finish();
+                        }
+                    })
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                        intent.putExtra(Common.IS_LOGIN, true);
+                        startActivity(intent);
+                        finish();
+                    });
         }
 
 

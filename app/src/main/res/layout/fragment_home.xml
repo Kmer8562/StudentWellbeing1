@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".Fragments.HomeFragment">
 
@@ -48,147 +49,274 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:weightSum="4"
-        android:padding="8dp"
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card_view_booking"
-            android:layout_marginEnd="8dp"
-            xmlns:app="http://schemas.android.com/apk/res.auto"
-            app:cardCornerRadius="8dp"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:weightSum="4"
+            android:padding="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_view_booking"
+                android:layout_marginEnd="8dp"
+                xmlns:app="http://schemas.android.com/apk/res.auto"
+                app:cardCornerRadius="8dp"
+
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:src="@drawable/ic_event_note_black_24dp"
+                        android:layout_width="50dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_height="50dp" />
+
+                    <TextView
+                        android:text="Booking"
+                        android:layout_gravity="center_horizontal"
+                        android:textSize="@dimen/textCardSize"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_view_information"
+                android:layout_marginEnd="8dp"
+                xmlns:app="http://schemas.android.com/apk/res.auto"
+                app:cardCornerRadius="8dp"
+
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:src="@drawable/ic_info_outline_black_24dp"
+                        android:layout_width="50dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_height="50dp" />
+
+                    <TextView
+                        android:text="Info"
+                        android:layout_gravity="center_horizontal"
+                        android:textSize="@dimen/textCardSize"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_view_history"
+                android:layout_marginEnd="8dp"
+                xmlns:app="http://schemas.android.com/apk/res.auto"
+                app:cardCornerRadius="8dp"
+
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:src="@drawable/ic_history_black_24dp"
+                        android:layout_width="50dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_height="50dp" />
+
+                    <TextView
+                        android:text="History"
+                        android:layout_gravity="center_horizontal"
+                        android:textSize="@dimen/textCardSize"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_view_notification"
+                android:layout_marginEnd="8dp"
+                xmlns:app="http://schemas.android.com/apk/res.auto"
+                app:cardCornerRadius="8dp"
+
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:src="@drawable/ic_notifications_black_24dp"
+                        android:layout_width="50dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_height="50dp" />
+
+                    <TextView
+                        android:text="Notification"
+                        android:layout_gravity="center_horizontal"
+                        android:textSize="@dimen/textCardSize"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+
+        </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_booking_info"
+            app:cardCornerRadius="8dp"
+            android:visibility="gone"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <LinearLayout
                 android:orientation="vertical"
+                android:padding="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <ImageView
-                    android:src="@drawable/ic_event_note_black_24dp"
-                    android:layout_width="50dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_height="50dp" />
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-                <TextView
-                    android:text="Booking"
-                    android:layout_gravity="center_horizontal"
-                    android:textSize="@dimen/textCardSize"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                        <ImageView
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/ic_event_note_black_24dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
 
-            </LinearLayout>
+                        <TextView
+                            android:text="Your Booking Information"
+                            android:layout_marginLeft="8dp"
+                            android:textStyle="bold"
+                            android:textSize="18sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
 
+                    </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card_view_information"
-            android:layout_marginEnd="8dp"
-            xmlns:app="http://schemas.android.com/apk/res.auto"
-            app:cardCornerRadius="8dp"
+                        <TextView
+                            android:text="@string/address_bullet"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
 
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/txt_department_address"
+                            android:text=" Address department"
+                            android:textStyle="bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                    </LinearLayout>
 
-                <ImageView
-                    android:src="@drawable/ic_info_outline_black_24dp"
-                    android:layout_width="50dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_height="50dp" />
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-                <TextView
-                    android:text="Info"
-                    android:layout_gravity="center_horizontal"
-                    android:textSize="@dimen/textCardSize"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                        <TextView
+                            android:text="@string/time_bullet"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
 
-            </LinearLayout>
-
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card_view_history"
-            android:layout_marginEnd="8dp"
-            xmlns:app="http://schemas.android.com/apk/res.auto"
-            app:cardCornerRadius="8dp"
-
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:src="@drawable/ic_history_black_24dp"
-                    android:layout_width="50dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_height="50dp" />
-
-                <TextView
-                    android:text="History"
-                    android:layout_gravity="center_horizontal"
-                    android:textSize="@dimen/textCardSize"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-            </LinearLayout>
+                        <TextView
+                            android:id="@+id/txt_time"
+                            android:text=" Time"
+                            android:textStyle="bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
 
 
-        </androidx.cardview.widget.CardView>
+                    </LinearLayout>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card_view_notification"
-            android:layout_marginEnd="8dp"
-            xmlns:app="http://schemas.android.com/apk/res.auto"
-            app:cardCornerRadius="8dp"
+                    <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
 
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content">
+                        <TextView
+                            android:text="@string/councillor_bullet"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/txt_councillor_name"
+                            android:text=" Daniel"
+                            android:textStyle="bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
 
-                <ImageView
-                    android:src="@drawable/ic_notifications_black_24dp"
-                    android:layout_width="50dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_height="50dp" />
+                        </LinearLayout>
 
-                <TextView
-                    android:text="Notification"
-                    android:layout_gravity="center_horizontal"
-                    android:textSize="@dimen/textCardSize"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:text="@string/bullet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/txt_time_remain"
+                        android:text=" Time"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
 
             </LinearLayout>
+
 
 
         </androidx.cardview.widget.CardView>
 
 
-    </LinearLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <LinearLayout
         android:orientation="vertical"
